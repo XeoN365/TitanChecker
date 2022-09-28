@@ -16,12 +16,15 @@ class Launcher():
     
     def update(self):
         try:
+            self.logging.info("Cloning repository...")
             repo = git.Repo.clone_from(self.giturl, os.getcwd())
         except Exception as e:
+            self.logging.info("Initializing repository...")
             repo = git.Repo(os.getcwd())
         q = repo.remotes.master
+        self.logging.info("Updating...")
         q.pull()
-        print("done")
+        self.logging.info("Update done!")
         
 if __name__ == "__main__":
     launcher = Launcher()
