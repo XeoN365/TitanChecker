@@ -15,11 +15,10 @@ class Launcher():
     
     def update(self):
         g = git.Git(self.giturl)
+        logging.info("Starting update!")
         g.pull('master', 'main')
+        logging.info("Update finished!")
         
-        
-        
-
 if __name__ == "__main__":
     launcher = Launcher()
     launcher.update()

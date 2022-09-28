@@ -116,7 +116,7 @@ class Checker():
         while self.running:
             try:
                 time.sleep(self.interval)
-                screenshot = pyag.screenshot(region= (self.offscreenX, self.offScreenY, 760, 1080))
+                screenshot = pyag.screenshot(region= (self.offScreenX, self.offScreenY, 760, 1080))
 
                 clinically_unsuitable = self.locateCenter(cs_img,screenshot)
                 out_dispense_window = self.locateCenter(odw_img, screenshot)
@@ -188,7 +188,7 @@ class Checker():
         logging.info(f"Total time running: {time.time() - self.time_started}")
         with open("log.csv", "a") as f:
             writer = csv.writer(f)
-            data = [datetime.today().strftime("%d/%m/%Y"), self.checks,0, time.time() - self.time_started]
+            data = [datetime.today().strftime("%d/%m/%Y"), self.checks_done,0, time.time() - self.time_started]
             writer.writerow(data)
         if self.repeat:
             self.start()
