@@ -30,4 +30,4 @@ if __name__ == "__main__":
     launcher = Launcher()
     
     launcher.update()
-    #launcher.checker.start()
+    launcher.checker.start()
