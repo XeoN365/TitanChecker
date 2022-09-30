@@ -19,6 +19,7 @@ class Checker():
         self.lastState = ""
         pyag.PAUSE = 0
         self.logging = logging.getLogger("Checker")
+        self.test = 1
     
     #Locates an image and returns center position of it
     def locateCenter(self, needle, haystack):
