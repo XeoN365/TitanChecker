@@ -101,17 +101,17 @@ class Checker():
         self.time_started = time.time()
         tries = 0
 
-        pnm_img = cv2.imread(os.path.join(os.getcwd(),'checks','patient_no_match.png'))
-        dd_img = cv2.imread(os.path.join(os.getcwd(),'checks','drug_doubling.png'))
-        dt_img = cv2.imread(os.path.join(os.getcwd(),'checks','drug_therapy.png'))
-        dab_img = cv2.imread(os.path.join(os.getcwd(),'checks','do_another.png'))
-        odw_img = cv2.imread(os.path.join(os.getcwd(),'checks','out_dispense_window.png'))
-        sdc_img = cv2.imread(os.path.join(os.getcwd(),'checks','7_day_check.png'))
-        pdp_img = cv2.imread(os.path.join(os.getcwd(),'checks','post_date.png'))
-        cs_img = cv2.imread(os.path.join(os.getcwd(),'checks','clinically_unsuitable.png'))
-        hri_img = cv2.imread(os.path.join(os.getcwd(),'checks','high_risk_item.png'))
-        sc_img = cv2.imread(os.path.join(os.getcwd(),'checks','special_container.png'))
-        ca_img = cv2.imread(os.path.join(os.getcwd(),'checks','check_another.png'))
+        pnm_img = cv2.imread(os.path.join(os.getcwd(),'TitanChecker','checks','patient_no_match.png'))
+        dd_img = cv2.imread(os.path.join(os.getcwd(),'TitanChecker','checks','drug_doubling.png'))
+        dt_img = cv2.imread(os.path.join(os.getcwd(),'TitanChecker','checks','drug_therapy.png'))
+        dab_img = cv2.imread(os.path.join(os.getcwd(),'TitanChecker','checks','do_another.png'))
+        odw_img = cv2.imread(os.path.join(os.getcwd(),'TitanChecker','checks','out_dispense_window.png'))
+        sdc_img = cv2.imread(os.path.join(os.getcwd(),'TitanChecker','checks','7_day_check.png'))
+        pdp_img = cv2.imread(os.path.join(os.getcwd(),'TitanChecker','checks','post_date.png'))
+        cs_img = cv2.imread(os.path.join(os.getcwd(),'TitanChecker','checks','clinically_unsuitable.png'))
+        hri_img = cv2.imread(os.path.join(os.getcwd(),'TitanChecker','checks','high_risk_item.png'))
+        sc_img = cv2.imread(os.path.join(os.getcwd(),'TitanChecker','checks','special_container.png'))
+        ca_img = cv2.imread(os.path.join(os.getcwd(),'TitanChecker','checks','check_another.png'))
 
         self.logging.warn("Starting Checker! Open titan on checking screen!")
 
