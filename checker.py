@@ -20,6 +20,17 @@ class Checker():
         pyag.PAUSE = 0
         self.logging = logging.getLogger("Checker")
         
+    def acceptPrescription(self,point):
+        offSetRegion = (self.offScreenx + point[0]-38,self.offScreeny + point[1]-28,1200,90)
+        screenshot = pyag.screenshot(region = offSetRegion)
+        accept_button = cv2.imread(os.path.join(os.getcwd(),'TitanChecker','checks','accept_button.png')
+        accept = self.locateCenter(accept_button, screenshot)
+        while accept is None:
+            screenshot = pyag.screenshot(region = offSetRegion)
+            accept = self.locateCenter(accept_button, screenshot)
+            time.sleep(1)
+            print("Looking for accept button")
+        pyag.click(accept[0] + offSetRegion[0], accept[1] + offSetRegion[1] )
     
     #Locates an image and returns center position of it
     def locateCenter(self, needle, haystack):
@@ -29,24 +40,17 @@ class Checker():
         else:
             return None
     
-    def click_offset(self, point, offsetX = 0, offsetY = 0):
-        X_offset = point[0] + offsetX + self.offScreenX
-        Y_offset = point[1] + offsetY + self.offScreenY
-        pyag.click(X_offset, Y_offset)
-    
     def postDate(self, point):
-        self.lastState= postDate.__name__
-        X_offset = 975 + self.offScreenX
-        self.logging.info("Post-dated prescription, accepting...")
-        self.click_offset(point,975)
+        self.lastState= self.postDate.__name__
+        self.acceptPrescription(self,point)
     
     def addPatient(self,point):
-        self.lastState = addPatient.__name__
+        self.lastState = self.addPatient.__name__
         X_offset = 846 + self.offScreenX
         self.logging.info("Patient missing, adding new patient...")
         self.click_offset(point, 846)
         self.logging.info("Looking for yes button...")
-        yes_button_image = cv2.imread('yes2.png')
+        yes_button_image = cv2.imread(os.path.join(os.getcwd(),'TitanChecker','checks','yes2.png'))
         yes_button = self.locateCenter(yes_button_image, pyag.screenshot())
         tries = 1
         while yes_button is None:
@@ -61,32 +65,26 @@ class Checker():
         self.click_offset(yes_button)
     
     def drugDoubling(self,point):
-        self.lastState = drugDoubling.__name__
-        self.logging.info("Drug Doubling, acccepting...")
-        self.click_offset(point, 820)
-        time.sleep(1)
+        self.lastState = self.drugDoubling.__name__
+        self.acceptPrescription(point)
     
     def drugTherapy(self,point):
-        self.lastState = drugTherapy.__name__
-        self.logging.info("Drug Therapy, acccepting...")
-        self.click_offset(point, 820)
-        time.sleep(1)
+        self.lastState = self.drugTherapy.__name__
+        self.acceptPrescription(point)
     
     def highRiskItem(self,point):
-        self.lastState = highRiskItem.__name__
-        self.logging.info("High risk item, accepting...")
-        self.click_offset(point,820)
-    
+        self.lastState = self.highRiskItem.__name__
+        self.acceptPrescription(point)
+
     def specialContainer(self,point):
-        self.lastState = specialContainer.__name__
-        self.logging.info("Special container, accepting...")
-        self.click_offset(point,835)
+        self.lastState = self.specialContainer.__name__
+        self.acceptPrescription(point)
     
     def skip(self):
-        self.lastState=skip.__name__
+        self.lastState=self.skip.__name__
         tries = 0
         self.logging.info("Looking for skip button...")
-        skip_button_image = cv2.imread("skip.png")
+        skip_button_image = cv2.imread(os.path.join(os.getcwd(),'TitanChecker','checks', 'skip.png'))
         skip_button = self.locateCenter(skip_button_image, pyag.screenshot())
         while skip_button is None:
             skip_button = self.locateCenter(skip_button_image, pyag.screenshot())
@@ -100,18 +98,20 @@ class Checker():
         self.running = True
         self.time_started = time.time()
         tries = 0
-
-        pnm_img = cv2.imread(os.path.join(os.getcwd(),'TitanChecker','checks','patient_no_match.png'))
-        dd_img = cv2.imread(os.path.join(os.getcwd(),'TitanChecker','checks','drug_doubling.png'))
-        dt_img = cv2.imread(os.path.join(os.getcwd(),'TitanChecker','checks','drug_therapy.png'))
-        dab_img = cv2.imread(os.path.join(os.getcwd(),'TitanChecker','checks','do_another.png'))
-        odw_img = cv2.imread(os.path.join(os.getcwd(),'TitanChecker','checks','out_dispense_window.png'))
-        sdc_img = cv2.imread(os.path.join(os.getcwd(),'TitanChecker','checks','7_day_check.png'))
-        pdp_img = cv2.imread(os.path.join(os.getcwd(),'TitanChecker','checks','post_date.png'))
-        cs_img = cv2.imread(os.path.join(os.getcwd(),'TitanChecker','checks','clinically_unsuitable.png'))
-        hri_img = cv2.imread(os.path.join(os.getcwd(),'TitanChecker','checks','high_risk_item.png'))
-        sc_img = cv2.imread(os.path.join(os.getcwd(),'TitanChecker','checks','special_container.png'))
-        ca_img = cv2.imread(os.path.join(os.getcwd(),'TitanChecker','checks','check_another.png'))
+        cwdpath = os.path.join(os.getcwd(),'TitanChecker','checks')
+        pnm_img = cv2.imread(os.path.join(cwdpath,'patient_no_match.png'))
+        dd_img = cv2.imread(os.path.join(cwdpath,'drug_doubling.png'))
+        dt_img = cv2.imread(os.path.join(cwdpath,'drug_therapy.png'))
+        dab_img = cv2.imread(os.path.join(cwdpath,'do_another.png'))
+        odw_img = cv2.imread(os.path.join(cwdpath,'out_dispense_window.png'))
+        sdc_img = cv2.imread(os.path.join(cwdpath,'7_day_check.png'))
+        pdp_img = cv2.imread(os.path.join(cwdpath,'post_date.png'))
+        cs_img = cv2.imread(os.path.join(cwdpath,'clinically_unsuitable.png'))
+        hri_img = cv2.imread(os.path.join(cwdpath,'high_risk_item.png'))
+        sc_img = cv2.imread(os.path.join(cwdpath,'special_container.png'))
+        ca_img = cv2.imread(os.path.join(cwdpath,'check_another.png'))
+        sp_img = cv2.imread(os.path.join(cwdpath,'already_done.png'))
+        nms_img = cv2.imread(os.path.join(cwdpath,'nms.png'))
 
         self.logging.warn("Starting Checker! Open titan on checking screen!")
 
@@ -131,6 +131,16 @@ class Checker():
                 high_risk_item = self.locateCenter(hri_img, screenshot)
                 special_container = self.locateCenter(sc_img, screenshot)
                 check_another = self.locateCenter(ca_img, screenshot)
+                already_done = self.locateCenter(sp_img,screenshot)
+                nms = self.locateCenter(nms_img, screenshot)
+
+                if already_done is not None:
+                    self.logging.error("Prescription already done!")
+                    self.skip()
+
+                if nms is not None:
+                    self.logging.error("NMS!")
+                    self.skip()
 
                 if clinically_unsuitable is not None:
                     self.logging.error("Prescription clinically unsuitable!")
@@ -160,20 +170,18 @@ class Checker():
                 if drug_doubling is not None:
                     self.drugDoubling(drug_doubling)
                 
-                if do_another_button is not None:
+                if do_another_button is not None and check_another is not None:
                     self.logging.info("No checks for this patient! NEXT!")
-                    self.click_offset(do_another_button)
-                    self.checks = self.checks + 1
-                    tries = 0
 
-                if check_another is not None:
-                    self.logging.info("No checks for this patient! NEXT!")
-                    self.click_offset(check_another)
-                    self.check = self.checks + 1
+                    button2click = do_another_button if do_another_button is not None else check_another
+                    self.click_offset(button2click)
+                    self.checks_done = self.checks_done + 1
                     tries = 0
 
                 if clinically_unsuitable is None and out_dispense_window is None and seven_day_check is None and post_date is None and patient_no_match is None and drug_doubling is None and drug_therapy is None and do_another_button is None and high_risk_item is None and special_container is None and check_another is None:
                     self.logging.error("Something went wrong! skipping cycle!")
+                    pyag.moveTo(1200,500)
+                    pyag.scroll(50)
                     tries += 1
                     if tries > 15:
                         self.logging.error("Can't find any checks! Looking for skip button!")
