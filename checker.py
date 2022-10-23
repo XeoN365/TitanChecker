@@ -23,7 +23,7 @@ class Checker():
     def acceptPrescription(self,point):
         offSetRegion = (self.offScreenx + point[0]-50,self.offScreeny + point[1]-40,1220,110)
         screenshot = pyag.screenshot(region = offSetRegion)
-        accept_button = cv2.imread(os.path.join(os.getcwd(),'TitanChecker','checks','accept_button.png')
+        accept_button = cv2.imread(os.path.join(os.getcwd(),'TitanChecker','checks','accept_button.png'))
         accept = self.locateCenter(accept_button, screenshot)
         while accept is None:
             screenshot = pyag.screenshot(region = offSetRegion)
