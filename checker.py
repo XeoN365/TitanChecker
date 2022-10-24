@@ -8,7 +8,7 @@ import os
 
 
 class Checker():
-    def __init__(self, interval = 1):
+    def __init__(self, logger, interval = 1):
         self.interval = interval
         self.running = False
         self.checks_done = 0
@@ -18,7 +18,7 @@ class Checker():
         self.repeat = False
         self.lastState = ""
         pyag.PAUSE = 0
-        self.logging = logging.getLogger("Checker")
+        self.logging = logger
         
     def acceptPrescription(self,point):
         self.lastState = self.acceptPrescription.__name__
@@ -30,7 +30,7 @@ class Checker():
             screenshot = pyag.screenshot(region = offSetRegion)
             accept = self.locateCenter(accept_button, screenshot)
             time.sleep(1)
-            print("Looking for accept button")
+            self.logging.info("Looking for accept button")
         pyag.click(accept[0] + offSetRegion[0], accept[1] + offSetRegion[1] )
     
     #Locates an image and returns center position of it
@@ -196,7 +196,7 @@ class Checker():
                         tries = 0
 
             except Exception as e:
-                print(e)
+                self.logging.error(e)
                 self.finish()
     
     def finish(self):
