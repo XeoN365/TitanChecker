@@ -41,7 +41,7 @@ class Checker():
             return None
 
     def click_offset(self, point, offset = 0):
-        pyag.click(point[0] + offset, point[1])
+        pyag.click(point[0] + self.offScreenX + offset, point[1] + self.offScreenY)
     
     def postDate(self, point):
         self.lastState= self.postDate.__name__
@@ -177,7 +177,7 @@ class Checker():
                     self.logging.info("No checks for this patient! NEXT!")
 
                     button2click = do_another_button if do_another_button is not None else check_another
-                    self.click_offset(button2click)
+                    self.click_offset(button2click,self.offScreenX)
                     self.checks_done = self.checks_done + 1
                     tries = 0
 
