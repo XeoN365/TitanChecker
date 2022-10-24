@@ -94,7 +94,7 @@ class Checker():
                 return True
             tries += 1
         self.logging.error("Skipping prescription!")
-        self.locateCenter(skip_button)
+        pyag.click(skip_button)
 
     def start(self):
         self.running = True
@@ -151,10 +151,14 @@ class Checker():
                 if seven_day_check is not None:
                     self.logging.error("Patient has 7 day check!")
                     self.skip()
-                    time.sleep(3)
+                    time.sleep(4)
                 
-                if out_dispense_window is not None:
-                    self.logging.error("Prescription already checked!")
+                if out_dispense_window is not None or already_done is not None:
+                    self.logging.error("Prescription already done!")
+                    self.skip()
+                
+                if nms is not None:
+                    self.logging.error("NMS!")
                     self.skip()
                 
                 if special_container is not None:
