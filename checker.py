@@ -163,18 +163,23 @@ class Checker():
                     self.skip()
                 
                 if special_container is not None:
+                    self.logging.error("Special Container!")
                     self.specialContainer(special_container)
                 
                 if post_date is not None:
+                    self.logging.error("Post date prescription!")
                     self.postDate(post_date)
                 
                 if high_risk_item is not None:
+                    self.logging.error("High risk item!")
                     self.highRiskItem(high_risk_item)
                 
                 if drug_therapy is not None:
+                    self.logging.error("Drug Therapy check!")
                     self.drugTherapy(drug_therapy)
                 
                 if drug_doubling is not None:
+                    self.logging.error("Drug Doubling check!")
                     self.drugDoubling(drug_doubling)
                 
                 if do_another_button is not None or check_another is not None:
