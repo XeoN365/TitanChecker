@@ -49,7 +49,6 @@ class Checker():
     
     def addPatient(self,point):
         self.lastState = self.addPatient.__name__
-        X_offset = 846 + self.offScreenX
         self.logging.info("Patient missing, adding new patient...")
         self.click_offset(point, 846)
         self.logging.info("Looking for yes button...")
@@ -95,7 +94,7 @@ class Checker():
                 return True
             tries += 1
         self.logging.error("Skipping prescription!")
-        self.locate(skip_button)
+        self.locateCenter(skip_button)
 
     def start(self):
         self.running = True
