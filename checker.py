@@ -39,6 +39,9 @@ class Checker():
             return (points.left + points.width/2), (points.top + points.height/2)
         else:
             return None
+
+    def click_offset(self, point, offset = 0):
+        pyag.click(point[0] + offset, point[1])
     
     def postDate(self, point):
         self.lastState= self.postDate.__name__
@@ -92,7 +95,7 @@ class Checker():
                 return True
             tries += 1
         self.logging.error("Skipping prescription!")
-        self.click_offset(skip_button)
+        self.locate(skip_button)
 
     def start(self):
         self.running = True
@@ -170,7 +173,7 @@ class Checker():
                 if drug_doubling is not None:
                     self.drugDoubling(drug_doubling)
                 
-                if do_another_button is not None and check_another is not None:
+                if do_another_button is not None or check_another is not None:
                     self.logging.info("No checks for this patient! NEXT!")
 
                     button2click = do_another_button if do_another_button is not None else check_another
