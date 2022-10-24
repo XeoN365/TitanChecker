@@ -45,7 +45,7 @@ class Checker():
     
     def postDate(self, point):
         self.lastState= self.postDate.__name__
-        self.acceptPrescription(self,point)
+        self.acceptPrescription(point)
     
     def addPatient(self,point):
         self.lastState = self.addPatient.__name__
