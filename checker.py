@@ -177,7 +177,7 @@ class Checker():
                     self.logging.info("No checks for this patient! NEXT!")
 
                     button2click = do_another_button if do_another_button is not None else check_another
-                    self.click_offset(button2click,self.offScreenX)
+                    self.click_offset(button2click)
                     self.checks_done = self.checks_done + 1
                     tries = 0
 
