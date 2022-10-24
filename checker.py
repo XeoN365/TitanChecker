@@ -21,6 +21,7 @@ class Checker():
         self.logging = logging.getLogger("Checker")
         
     def acceptPrescription(self,point):
+        self.lastState = self.acceptPrescription.__name__
         offSetRegion = (self.offScreenX + point[0]-50,self.offScreenY + point[1]-40,1220,110)
         screenshot = pyag.screenshot(region = offSetRegion)
         accept_button = cv2.imread(os.path.join(os.getcwd(),'TitanChecker','checks','accept_button.png'))
@@ -115,7 +116,7 @@ class Checker():
         sp_img = cv2.imread(os.path.join(cwdpath,'already_done.png'))
         nms_img = cv2.imread(os.path.join(cwdpath,'nms.png'))
 
-        self.logging.warn("Starting Checker! Open titan on checking screen!")
+        self.logging.info("Starting Checker! Open titan on checking screen!")
 
         while self.running:
             try:
