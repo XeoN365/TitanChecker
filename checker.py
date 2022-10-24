@@ -8,7 +8,7 @@ import os
 
 
 class Checker():
-    def __init__(self, logger, interval = 1):
+    def __init__(self, interval = 1):
         self.interval = interval
         self.running = False
         self.checks_done = 0
@@ -18,7 +18,7 @@ class Checker():
         self.repeat = False
         self.lastState = ""
         pyag.PAUSE = 0
-        self.logging = logger
+        self.logging = logging.getLogger("Checker")
         
     def acceptPrescription(self,point):
         self.lastState = self.acceptPrescription.__name__
