@@ -26,11 +26,15 @@ class Checker():
         screenshot = pyag.screenshot(region = offSetRegion)
         accept_button = cv2.imread(os.path.join(os.getcwd(),'TitanChecker','checks','accept_button.png'))
         accept = self.locateCenter(accept_button, screenshot)
+        tries = 0
         while accept is None:
             screenshot = pyag.screenshot(region = offSetRegion)
             accept = self.locateCenter(accept_button, screenshot)
             time.sleep(1)
             self.logging.info("Looking for accept button")
+            tries += 1
+            if tries > 3:
+                return True
         pyag.click(accept[0] + offSetRegion[0], accept[1] + offSetRegion[1] )
     
     #Locates an image and returns center position of it
@@ -161,6 +165,10 @@ class Checker():
                 if nms is not None:
                     self.logging.error("NMS!")
                     self.skip()
+
+                if patient_no_match is not None:
+                    self.logging.error("Patient not found!, adding...")
+                    self.addPatient(patient_no_match)
                 
                 if special_container is not None:
                     self.logging.error("Special Container!")
