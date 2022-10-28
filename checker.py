@@ -69,7 +69,7 @@ class Checker():
             if tries > 15:
                 return True
             tries += 1
-        self.click_offset(yes_button)
+        pyag.click(yes_button)
     
     def drugDoubling(self,point):
         self.lastState = self.drugDoubling.__name__
