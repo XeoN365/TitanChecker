@@ -53,23 +53,26 @@ class Checker():
         self.acceptPrescription(point)
     
     def addPatient(self,point):
-        self.lastState = self.addPatient.__name__
-        self.logging.info("Patient missing, adding new patient...")
-        self.click_offset(point, 846)
-        self.logging.info("Looking for yes button...")
-        yes_button_image = cv2.imread(os.path.join(os.getcwd(),'TitanChecker','checks','yes2.png'))
-        yes_button = self.locateCenter(yes_button_image, pyag.screenshot())
-        tries = 1
-        while yes_button is None:
-            self.lastState="addPatient_yesButton"
-            pyag.press("tab")
-            time.sleep(1)
+        if self.lastState != self.addPatient.__name__ :
+            self.lastState = self.addPatient.__name__
+            self.logging.info("Patient missing, adding new patient...")
+            self.click_offset(point, 846)
+            self.logging.info("Looking for yes button...")
+            yes_button_image = cv2.imread(os.path.join(os.getcwd(),'TitanChecker','checks','yes2.png'))
             yes_button = self.locateCenter(yes_button_image, pyag.screenshot())
-            self.logging.info(f"Looking for yes button. ({tries})")
-            if tries > 15:
-                return True
-            tries += 1
-        pyag.click(yes_button)
+            tries = 1
+            while yes_button is None:
+                self.lastState="addPatient_yesButton"
+                pyag.press("tab")
+                time.sleep(1)
+                yes_button = self.locateCenter(yes_button_image, pyag.screenshot())
+                self.logging.info(f"Looking for yes button. ({tries})")
+                if tries > 30:
+                    return True
+                tries += 1
+            pyag.click(yes_button)
+        else:
+            time.sleep(1)
     
     def drugDoubling(self,point):
         self.lastState = self.drugDoubling.__name__
@@ -119,6 +122,7 @@ class Checker():
         ca_img = cv2.imread(os.path.join(cwdpath,'check_another.png'))
         sp_img = cv2.imread(os.path.join(cwdpath,'already_done.png'))
         nms_img = cv2.imread(os.path.join(cwdpath,'nms.png'))
+        cnl_img = cv2.imread(os.path.join(cwdpath, 'close.png'))
 
         self.logging.info("Starting Checker! Open titan on checking screen!")
 
@@ -140,6 +144,11 @@ class Checker():
                 check_another = self.locateCenter(ca_img, screenshot)
                 already_done = self.locateCenter(sp_img,screenshot)
                 nms = self.locateCenter(nms_img, screenshot)
+                cancel_btn = self.locateCenter(cnl_img, screenshot)
+
+                if cancel_btn is not None:
+                    self.logging.error("Error message showed up!, pressing cancel")#
+                    self.click_offset(cancel_btn)
 
                 if already_done is not None:
                     self.logging.error("Prescription already done!")
