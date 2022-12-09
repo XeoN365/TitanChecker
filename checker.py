@@ -53,7 +53,7 @@ class Checker():
         self.acceptPrescription(point)
     
     def addPatient(self,point):
-        if self.lastState != self.addPatient.__name__ :
+        if self.lastState != "addPatient_yesButton" :
             self.lastState = self.addPatient.__name__
             self.logging.info("Patient missing, adding new patient...")
             self.click_offset(point, 846)
