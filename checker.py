@@ -200,6 +200,7 @@ class Checker():
                     self.drugDoubling(drug_doubling)
                 
                 if do_another_button is not None or check_another is not None:
+                    self.lastState = "doAnother"
                     self.logging.info("No checks for this patient! NEXT!")
 
                     button2click = do_another_button if do_another_button is not None else check_another
